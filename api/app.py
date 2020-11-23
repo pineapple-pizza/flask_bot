@@ -6,6 +6,9 @@ from folium import branca
 import requests
 import json
 
+import nltk
+nltk.download('punkt')
+
 from nltk.tokenize import word_tokenize
 
 app = Flask(__name__)
@@ -48,19 +51,21 @@ class Data(MethodView):
     """
     def get(self):
         """ Responds to GET requests for the data"""
-    
-        query = request.args['query']
-        checked_query = Query.check_query(query)
-        print ("checked query", checked_query)
-        
-        search_payload = {'q': checked_query, 'format' : "json", 'addressdetails' : 1}
-        search_req = requests.get(search_URL, params = search_payload)
-        search_json = search_req.json()
-        print('search', search_json[0])
-        
-        return search_json[0]
+        try:
+            query = request.args['query']
+            checked_query = Query.check_query(query)
+            print ("checked query", checked_query)
+            
+            search_payload = {'q': checked_query, 'format' : "json", 'addressdetails' : 1}
+            search_req = requests.get(search_URL, params = search_payload)
+            search_json = search_req.json()
+            print('search', search_json[0])
+            
+            return search_json[0]
+        except Exception as e:
+            print ('query missing {}'.format(e)) 
 
-app.add_url_rule("/api/data/", view_func=Data.as_view("data"))
+app.add_url_rule("/api/data", view_func=Data.as_view("data"))
 
 class Map(MethodView):
     """ Example of a class inheriting from flask.views.MethodView 
@@ -94,7 +99,7 @@ class Map(MethodView):
             
         return map._repr_html_()
 
-app.add_url_rule("/api/map/", view_func=Map.as_view("map"))
+app.add_url_rule("/api/map", view_func=Map.as_view("map"))
 
 class Wiki(MethodView):
     """ Example of a class inheriting from flask.views.MethodView 
@@ -114,7 +119,7 @@ class Wiki(MethodView):
         
         return wiki_formatted["extract"]
 
-app.add_url_rule("/api/wiki/", view_func=Wiki.as_view("wiki"))
+app.add_url_rule("/api/wiki", view_func=Wiki.as_view("wiki"))
 
 if __name__ == "__main__":
     app.run(debug=True)
