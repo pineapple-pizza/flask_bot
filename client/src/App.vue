@@ -1,30 +1,29 @@
 <template>
-<div id="app">
-    <p>{{ greeting }}</p>
-    <p>{{ flaskGreeting }}</p>
-    <my-map></my-map>
-</div>
+<v-app>
+  <div id="app">
+      <navbar></navbar>
+      <my-map></my-map>
+      <my-footer></my-footer>
+  </div>
+</v-app>
 </template>
 
 <script>
 import Map from '@/components/Map.vue'
+import Navbar from '@/components/Navbar.vue'
+import Footer from '@/components/Footer.vue'
 
 export default {
     name: 'App',
     components: {
-      "my-map": Map
+      "my-map": Map,
+      "navbar": Navbar,
+      "my-footer": Footer,
     },
     data() {
       return {
-        greeting: 'Hello, Vue!',
-        flaskGreeting: ""
       }
     },
-    created: async function(){
-        const gResponse = await fetch("http://localhost:5000/greeting");
-        const gObject = await gResponse.json();
-        this.flaskGreeting = gObject.greeting;
-    }
 }
 </script>
 
@@ -36,5 +35,4 @@ export default {
   text-align: center
   color: #2c3e50
   margin-top: 60px
-
 </style>
