@@ -117,7 +117,7 @@ export default {
   methods: {
     getData() {
       axios
-        .get("data/", {
+        .get("data", {
           params: {
             query: this.inputValue,
           },
@@ -153,7 +153,7 @@ export default {
 
     createMap() {
       axios
-        .get("map/", {
+        .get("map", {
           params: {
             lat: this.lat,
             lon: this.lon,
@@ -174,7 +174,7 @@ export default {
     },
     getWiki() {
       axios
-        .get("wiki/", {
+        .get("wiki", {
           params: {
             query: this.inputValue,
           },
