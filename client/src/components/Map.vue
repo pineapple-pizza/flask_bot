@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="space-around">
-      <v-card width="400" class="card-edit">
+      <v-card class="card-edit">
         <v-app-bar flat color="deep-purple lighten-3">
           <v-app-bar-nav-icon color="white"></v-app-bar-nav-icon>
 

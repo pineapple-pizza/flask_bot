@@ -4,7 +4,6 @@ from flask.views import MethodView
 import folium
 from folium import branca
 import requests
-from IPython.display import HTML, display
 import json
 
 from nltk.tokenize import word_tokenize
@@ -16,7 +15,7 @@ search_URL = "https://nominatim.openstreetmap.org/search?"
 
 @app.route("/api/greeting")
 def greeting():
-    return {'greeting': 'Hello from Flask!'}
+    return {'greeting': "GrandPy, le meilleur des bots"}
 
 class Query:
     """parsing the query before executing it"""

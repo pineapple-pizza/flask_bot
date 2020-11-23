@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app-bar flat fixed>
-        {{ flaskGreeting }}
+        <v-toolbar-title>{{ flaskGreeting }}</v-toolbar-title>
     </v-app-bar>
   </div>
 </template>
