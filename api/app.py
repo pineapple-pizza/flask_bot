@@ -45,12 +45,8 @@ class Query:
         return query
 
 class Data(MethodView):
-    """ Example of a class inheriting from flask.views.MethodView 
-
-    All 5 request methods are available at /api/data
-    """
+    """ Responds to GET requests for the data"""
     def get(self):
-        """ Responds to GET requests for the data"""
         try:
             query = request.args['query']
             checked_query = Query.check_query(query)
@@ -68,12 +64,8 @@ class Data(MethodView):
 app.add_url_rule("/api/data", view_func=Data.as_view("data"))
 
 class Map(MethodView):
-    """ Example of a class inheriting from flask.views.MethodView 
-
-    All 5 request methods are available at /api/map
-    """
+    """ Responds to GET requests for the map"""
     def get(self):
-        """ Responds to GET requests for the map"""
     
         lat = request.args['lat']    
         lon = request.args['lon']
@@ -102,12 +94,8 @@ class Map(MethodView):
 app.add_url_rule("/api/map", view_func=Map.as_view("map"))
 
 class Wiki(MethodView):
-    """ Example of a class inheriting from flask.views.MethodView 
-
-    All 5 request methods are available at /api/wiki
-    """
+    """ Responds to GET requests for the wiki"""
     def get(self):
-        """ Responds to GET requests for the wiki"""
     
         query = request.args['query']
         checked_query = Query.check_query(query)

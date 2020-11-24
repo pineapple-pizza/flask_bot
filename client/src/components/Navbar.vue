@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app-bar flat fixed>
-        <v-toolbar-title>{{ flaskGreeting }}</v-toolbar-title>
+        <v-toolbar-title class="mx-auto">{{ flaskGreeting }}</v-toolbar-title>
     </v-app-bar>
   </div>
 </template>
@@ -19,6 +19,7 @@ export default {
       }
     },
     mounted(){
+        // function to get the res from /api/greeting
         axios
         .get("/greeting")
         .then((response) => { 

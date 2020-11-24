@@ -1,10 +1,11 @@
 <template>
   <div>
-    <v-footer color="grey lighten-4" fixed>
+    <v-footer color="grey lighten-4 footer-edit" fixed>
       <v-row justify="center" no-gutters>
-        <p class="mt-3">
-        <strong>Anouchik Aslanian</strong> —
+        <p class="mt-3 ">
+        <strong>Anouchik Aslanian </strong>
           </p>
+          <v-spacer class="hidden-sm-and-up"></v-spacer>
         <v-btn
           v-for="(link, i) in links"
           :key="i"
@@ -38,5 +39,10 @@ export default {
 .link-edit
   text-decoration: none
   color: inherit
+  @media (max-width: 600px)
+    font-size: 10px
 
+.footer-edit
+  @media (max-width: 600px)
+    font-size: 14px
 </style>

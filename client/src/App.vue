@@ -1,24 +1,17 @@
 <template>
   <v-app>
     <div id="app">
-      <navbar></navbar>
-      <my-map></my-map>
-      <my-footer></my-footer>
+        <home></home>
     </div>
   </v-app>
 </template>
 
 <script>
-import Map from "@/components/Map.vue";
-import Navbar from "@/components/Navbar.vue";
-import Footer from "@/components/Footer.vue";
-
+import Home from "@/views/Home.vue";
 export default {
   name: "App",
   components: {
-    "my-map": Map,
-    navbar: Navbar,
-    "my-footer": Footer,
+    "home": Home
   },
   data() {
     return {};

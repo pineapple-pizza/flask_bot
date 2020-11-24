@@ -17,16 +17,16 @@
         </v-app-bar>
 
         <v-card-text class="card-text">
-          <div class="font-weight-bold ml-8 mb-2">
+          <div class="font-weight-bold text-center">
             {{ currentDateWithFormat }}
           </div>
           <div v-for="(message, i) in allMessages" :key="i">
-            <v-row justify="start" class="mt-3">
+            <v-row justify="start" class="mt-3 ml-1">
               <div class="sender-bulle font-italic">
                 <p v-text="message.input"></p>
               </div>
             </v-row>
-            <v-row justify="end">
+            <v-row justify="end" class="mr-1">
               <div class="bot-bulle">
                 <v-card flat class="map-edit">
 
@@ -115,6 +115,7 @@ export default {
     };
   },
   methods: {
+    // method request to get res from /api/data
     getData() {
       axios
         .get("data", {
@@ -126,14 +127,18 @@ export default {
           this.lat = res.data.lat;
           this.lon = res.data.lon;
           this.address = res.data.display_name;
+
+          // calling functions that will create the map and the wiki text and displaying results
           this.createMap();
           this.getWiki();
 
+          // to get a random sentence from randomSentences[]
           const idx = Math.floor(Math.random() * this.randomSentences.length);
           this.selectedSentence = this.randomSentences[idx]
 
           console.log("selected senntence", this.selectedSentence)
 
+          // pushing all in allMessages[] so we can display it dynamically
           this.allMessages.push({
             input: this.inputValue,
             answer: this.selectedSentence.text,
@@ -141,6 +146,7 @@ export default {
           });
           console.log("all messages", this.allMessages);
 
+          // reseting inputValue to "" so the input won't display the value we just typed
           this.inputValue = "";
           console.log("res", res.data.display_name);
           console.log("coordinaites", this.lat, this.lon);
@@ -152,6 +158,7 @@ export default {
     },
 
     createMap() {
+      // function to create the map from /api/map
       axios
         .get("map", {
           params: {
@@ -173,6 +180,7 @@ export default {
         });
     },
     getWiki() {
+      // function to get the wiki results from /api/wiki
       axios
         .get("wiki", {
           params: {
@@ -211,8 +219,6 @@ export default {
 .sender-bulle
   height: 100%
   width: 100%
-
-.bot-bulle
 
 .input-field
   width: 280px
