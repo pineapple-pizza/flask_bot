@@ -11,9 +11,14 @@
 
           <v-spacer></v-spacer>
 
-          <v-btn color="white" icon>
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
+          <v-row align="center" justify="end">
+            <span class="white--text">
+              {{ temp }}° C
+            </span>
+            <div>
+              <v-img :src="weather_icon"></v-img>
+            </div>
+          </v-row>
         </v-app-bar>
 
         <v-card-text class="card-text">
@@ -29,8 +34,7 @@
             <v-row justify="end" class="mr-1">
               <div class="bot-bulle">
                 <v-card flat class="map-edit">
-
-                  <div>{{message.answer}} {{message.address}}</div>
+                  <div>{{ message.answer }} {{ message.address }}</div>
                   <div v-html="message.wiki"></div>
                   <div v-html="message.map"></div>
                 </v-card>
@@ -40,27 +44,27 @@
         </v-card-text>
         <v-card-actions>
           <div class="input-field">
-
-          <v-text-field
-            label="écris ta question ici"
-            rounded
-            dense
-            filled
-            v-model="inputValue"
-            
-          ></v-text-field>
+            <v-text-field
+              label="écris ta question ici"
+              rounded
+              dense
+              filled
+              v-model="inputValue"
+              name="input_search"
+              @keyup.enter="getData"
+            ></v-text-field>
           </div>
           <div class="pb-7 pl-5">
-
-          <v-btn
-            despressed
-            rounded
-            color="deep-purple lighten-3"
-            dark
-            @click="getData"
-            type="submit"
-            >submit</v-btn
-          >
+            <v-btn
+              despressed
+              rounded
+              color="deep-purple lighten-3"
+              dark
+              @click="getData"
+              type="submit"
+              name="submit_search"
+              >submit</v-btn
+            >
           </div>
         </v-card-actions>
       </v-card>
@@ -82,6 +86,8 @@ export default {
       address: "",
       inputValue: "",
       extract: "",
+      temp: "",
+      weather_icon: "",
       newInput: "",
       allMessages: [],
       currentDateWithFormat: new Date()
@@ -90,28 +96,32 @@ export default {
         .replace(/-/g, "/"),
       randomSentences: [
         {
-          text: 'Evidémment, mon petit eucalyptus! La voici : '
+          text: "Evidémment, mon petit eucalyptus! La voici : ",
         },
         {
-          text: "C'est une bonne question laisse-moi chercher mes lunettes et je te dis ça... Ah, les voici. Pour te répondre, c'est : "
+          text:
+            "C'est une bonne question laisse-moi chercher mes lunettes et je te dis ça... Ah, les voici. Pour te répondre, c'est : ",
         },
         {
-          text: 'Tu demandes beaucoup de choses dis-donc! Heureusement que je connais tout ahah. '
+          text:
+            "Tu demandes beaucoup de choses dis-donc! Heureusement que je connais tout ahah. ",
         },
         {
-          text: 'Tu devrais ranger ta chambre avant de me demander une adresse. Mais comme je suis gentil, je te la donne : '
+          text:
+            "Tu devrais ranger ta chambre avant de me demander une adresse. Mais comme je suis gentil, je te la donne : ",
         },
         {
-          text: 'Pourquoi tu ne cherches pas sur ta brique cellulaire ? '
+          text: "Pourquoi tu ne cherches pas sur ta brique cellulaire ? ",
         },
         {
-          text: "J'ai rencontré ta grand-mère là-bas, héhé.... La voici : "
+          text: "J'ai rencontré ta grand-mère là-bas, héhé.... La voici : ",
         },
         {
-          text: "Oui, évidemment ! Il devrait y avoir un fleuriste dans le coin, n'oublie pas d'acheter des fleurs pour ta mère. "
+          text:
+            "Oui, évidemment ! Il devrait y avoir un fleuriste dans le coin, n'oublie pas d'acheter des fleurs pour ta mère. ",
         },
       ],
-      selectedSentence: ''
+      selectedSentence: "",
     };
   },
   methods: {
@@ -131,18 +141,19 @@ export default {
           // calling functions that will create the map and the wiki text and displaying results
           this.createMap();
           this.getWiki();
+          this.getWeather();
 
           // to get a random sentence from randomSentences[]
           const idx = Math.floor(Math.random() * this.randomSentences.length);
-          this.selectedSentence = this.randomSentences[idx]
+          this.selectedSentence = this.randomSentences[idx];
 
-          console.log("selected senntence", this.selectedSentence)
+          console.log("selected senntence", this.selectedSentence);
 
           // pushing all in allMessages[] so we can display it dynamically
           this.allMessages.push({
             input: this.inputValue,
             answer: this.selectedSentence.text,
-            address: this.address
+            address: this.address,
           });
           console.log("all messages", this.allMessages);
 
@@ -193,6 +204,28 @@ export default {
           this.allMessages.push({
             wiki: this.extract,
           });
+        })
+        .catch((err) => {
+          // Handle Error Here
+          console.error(err);
+        });
+    },
+    getWeather() {
+      // function to get the weather results from /api/weather
+      axios
+        .get("weather", {
+          params: {
+            query: this.inputValue,
+          },
+        })
+        .then((res) => {
+          console.log("weather", res);
+          this.temp = res.data.temperature;
+          this.weather_icon =
+            "http://openweathermap.org/img/wn/" + res.data.icon + ".png";
+          // this.allMessages.push({
+          //   temperature: this.temp,
+          // });
         })
         .catch((err) => {
           // Handle Error Here

@@ -109,5 +109,27 @@ class Wiki(MethodView):
 
 app.add_url_rule("/api/wiki", view_func=Wiki.as_view("wiki"))
 
+class Weather(MethodView):
+    """ Responds to GET requests for the weather infos"""
+    def get(self):
+    
+        query = request.args['query']
+        checked_query = Query.check_query(query)
+        print ("checked query", checked_query)
+        
+        weather_req = requests.get("https://api.openweathermap.org/data/2.5/weather?q="+ checked_query[0] + "&units=metric&lang=fr&APPID=45ba61fe0432754de8daa1adc7e5f590")
+        weather_json = weather_req.json()
+        
+        weather = {
+            'city': checked_query[0],
+            'temperature': weather_json['main']['temp'],
+            'icon': weather_json['weather'][0]['icon']
+        }
+        
+        print('weather ', weather_json)
+        return weather
+
+app.add_url_rule("/api/weather", view_func=Weather.as_view("weather"))
+
 if __name__ == "__main__":
     app.run(debug=True)

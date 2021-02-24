@@ -16,3 +16,4 @@ _can be used seperatly from the front (ex : on postman)_
 - `/api/data?query` : 1 query param needed (**query**)
 - `/api/map?` : 3 query params needed (**lat**, **lon**, **name** (address))
 - `/api/wiki?query` : 1 query param needed (**query**)
+- `/api/weather?query` : 1 query param needed (**query**)
