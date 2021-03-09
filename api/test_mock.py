@@ -15,6 +15,7 @@ class TestWeatherMock(unittest.TestCase):
             response = obj.get
 
             print(response.status_code)
+            print(response.json())
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), fake_weather)
 
