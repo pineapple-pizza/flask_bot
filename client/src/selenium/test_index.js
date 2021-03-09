@@ -7,12 +7,16 @@ const { Builder, By, Key, until } = require("selenium-webdriver");
   await driver.get(process.env.VUE_APP_BASE_URL);
   await driver
     .findElement(By.name("input_search"))
-    .sendKeys("erevan", Key.RETURN)
     .then(function() {
         setTimeout(function() {
             driver
             .findElement(By.name("input_search"))
-            .sendKeys("musée d'orsay", Key.RETURN);
+            .sendKeys("erevan", Key.RETURN)
+            driver.wait(until.elementLocated(By.id('wiki_text')), 1000);
+            driver.wait(until.elementLocated(By.id('temp_slnm')), 1000);
+            driver.wait(until.elementLocated(By.id('icon_weather')), 1000);
+            driver.wait(until.elementLocated(By.id('message_slnm')), 1000);
+            driver.wait(until.elementLocated(By.id('map_widget')), 1000);
         }, 5000)
     })
 })();

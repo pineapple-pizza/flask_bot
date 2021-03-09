@@ -12,11 +12,11 @@
           <v-spacer></v-spacer>
 
           <v-row align="center" justify="end">
-            <span class="white--text">
-              {{ temp }}° C
+            <span class="white--text" id="temp_slnm">
+              {{ temp }}
             </span>
             <div>
-              <v-img :src="weather_icon"></v-img>
+              <v-img :src="weather_icon" id="icon_weather"></v-img>
             </div>
           </v-row>
         </v-app-bar>
@@ -28,15 +28,15 @@
           <div v-for="(message, i) in allMessages" :key="i">
             <v-row justify="start" class="mt-3 ml-1">
               <div class="sender-bulle font-italic">
-                <p v-text="message.input"></p>
+                <p v-text="message.input" id="message_slnm"></p>
               </div>
             </v-row>
             <v-row justify="end" class="mr-1">
               <div class="bot-bulle">
                 <v-card flat class="map-edit">
                   <div>{{ message.answer }} {{ message.address }}</div>
-                  <div v-html="message.wiki"></div>
-                  <div v-html="message.map"></div>
+                  <div v-html="message.wiki" id="wiki_text"></div>
+                  <div v-html="message.map" id="map_widget"></div>
                 </v-card>
               </div>
             </v-row>
@@ -220,12 +220,10 @@ export default {
         })
         .then((res) => {
           console.log("weather", res);
-          this.temp = res.data.temperature;
+          this.temp = res.data.temperature + "°C";
           this.weather_icon =
             "http://openweathermap.org/img/wn/" + res.data.icon + ".png";
-          // this.allMessages.push({
-          //   temperature: this.temp,
-          // });
+
         })
         .catch((err) => {
           // Handle Error Here
