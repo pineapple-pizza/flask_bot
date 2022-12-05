@@ -147,20 +147,15 @@ export default {
           const idx = Math.floor(Math.random() * this.randomSentences.length);
           this.selectedSentence = this.randomSentences[idx];
 
-          console.log("selected senntence", this.selectedSentence);
-
           // pushing all in allMessages[] so we can display it dynamically
           this.allMessages.push({
             input: this.inputValue,
             answer: this.selectedSentence.text,
             address: this.address,
           });
-          console.log("all messages", this.allMessages);
 
           // reseting inputValue to "" so the input won't display the value we just typed
           this.inputValue = "";
-          console.log("res", res.data.display_name);
-          console.log("coordinaites", this.lat, this.lon);
         })
         .catch((err) => {
           // Handle Error Here
@@ -179,7 +174,6 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res);
           this.map = res.data;
           this.allMessages.push({
             map: this.map,
@@ -199,7 +193,6 @@ export default {
           },
         })
         .then((res) => {
-          console.log("wiki", res);
           this.extract = res.data;
           this.allMessages.push({
             wiki: this.extract,
@@ -219,7 +212,6 @@ export default {
           },
         })
         .then((res) => {
-          console.log("weather", res);
           this.temp = res.data.temperature + "°C";
           this.weather_icon =
             "http://openweathermap.org/img/wn/" + res.data.icon + ".png";
